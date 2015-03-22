@@ -1,0 +1,39 @@
+head
+    title Upload
+    link(type="text/stylesheet", href="app.scss")
+    base(href="/")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    meta(charset="utf-8")
+
+body
+    div.container(ng-app="app", ng-controller="app")
+
+        h3 Input type=file upload with Angular and Meteor
+
+        p
+            | Take photo with camera
+            button.btn.btn-primary(ng-click="takePhoto()") Take a Photo
+
+        p File Upload - file-model directive: on-select="upload($event)"
+        .btn.btn-primary.file-container
+            input(
+                type="file",
+                file-model="files",
+                on-select="upload($event)"
+                )
+            | Select an image to upload
+
+        br
+        br
+
+        p File Upload - angular.element(this).scope().upload(this)
+        .btn.btn-success.file-container
+            input(
+                type="file",
+                onchange="angular.element(this).scope().upload(this)"
+                )
+            | Select an image to upload
+
+        hr
+
+        div(ng-include="'client/test.html'")

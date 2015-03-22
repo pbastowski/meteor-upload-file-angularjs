@@ -1,0 +1,9 @@
+p Uploaded Images
+img(
+    ng-repeat="img in images track by img._id",
+    xng-src="/uploads/{{img.collectionName}}-{{ img._id }}-{{ img.original.name }}"
+    ng-src="{{ url(img) }}"
+    ng-click="images.remove(img)"
+    )
+
+test
