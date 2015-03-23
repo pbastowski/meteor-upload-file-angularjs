@@ -14,18 +14,7 @@ body
             | Take photo with camera
             button.btn.btn-primary(ng-click="takePhoto()") Take a Photo
 
-        p File Upload - file-model directive: on-select="upload($event)"
-        .btn.btn-primary.file-container
-            input(
-                type="file",
-                file-model="upload($event)"
-                )
-            | Select an image to upload
-
-        br
-        br
-
-        p File Upload - angular.element(this).scope().upload(this)
+        p File Upload
         .btn.btn-success.file-container
             input(
                 type="file",
