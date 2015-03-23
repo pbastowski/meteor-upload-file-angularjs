@@ -11,14 +11,34 @@
     });
 
     if ( Meteor.isClient ) {
+
+        // Add the FileUpload service for the Client
         angular.module('app')
             .factory('FileUpload', fileUpload);
 
-        function fileUpload() {
+        function fileUpload($meteor, $log) {
             return {
-                Images: Images
+                images:    $meteor.collection(function () { return Images.find() }),
+                url:       url,
+                uploadImg: uploadImg
+            };
+
+            function url(image) {
+                return Images.findOne(image._id).url();
+            }
+
+            function uploadImg(el) {
+                if (el instanceof HTMLElement)
+                    var data = el.files[0];
+                else
+                    data = el;
+
+                return Images.insert(data, function (err, fileObj) {
+                    $log.debug('insert: ', fileObj);
+                });
             }
         }
+
     }
 
 }());

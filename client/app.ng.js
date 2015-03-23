@@ -7,17 +7,12 @@
         .controller('app', appController)
     ;
 
-    function appController($scope, $log, $meteor, FileUpload) {
-        $scope.upload = upload;
+    function appController($scope, $log, FileUpload) {
+        $scope.upload = FileUpload.uploadImg;
+        $scope.url    = FileUpload.url;
+        $scope.images = FileUpload.images;
+
         $scope.takePhoto = takePhoto;
-        $scope.url = url;
-        var Images = FileUpload.Images;
-
-        $scope.images = $meteor.collection(function () { return Images.find() });
-
-        function url (image) {
-            return Images.findOne(image._id).url();
-        };
 
         function takePhoto () {
             MeteorCamera.getPicture(callback);
@@ -26,18 +21,10 @@
                 if (error)
                     return $log.error('camera returned an error: ', error);
 
-                Images.insert(data, function (err, fileObj) {
-                    $scope.$apply();
-                    $log.debug('insert: ', err, fileObj);
-                });
-
+                FileUpload.uploadImg(data)
+                    .then($scope.apply);
             }
         }
 
-        function upload(el) {
-            Images.insert(el.files[0], function (err, fileObj) {
-                $log.debug('insert: ', fileObj);
-            });
-        }
     }
 }());
