@@ -16,7 +16,7 @@
         angular.module('app')
             .factory('FileUpload', fileUpload);
 
-        function fileUpload($meteor, $log) {
+        function fileUpload($meteor, $log, $q) {
             return {
                 images:    $meteor.collection(function () { return Images.find() }),
                 url:       url,
@@ -33,9 +33,13 @@
                 else
                     data = el;
 
-                return Images.insert(data, function (err, fileObj) {
+                var d = $q.defer();
+                Images.insert(data, function (err, fileObj) {
                     $log.debug('insert: ', fileObj);
+                    d.resolve();
                 });
+
+                return d.promise;
             }
         }
 

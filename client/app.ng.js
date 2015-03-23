@@ -21,8 +21,8 @@
                 if (error)
                     return $log.error('camera returned an error: ', error);
 
-                FileUpload.uploadImg(data)
-                    .then($scope.apply);
+                FileUpload.uploadImg(data);
+                    //.then($scope.apply);
             }
         }
 
