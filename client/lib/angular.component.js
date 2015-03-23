@@ -1,9 +1,9 @@
-//;(function () {
+;(function () {
+    'use strict';
 
-    console.log('!!! component.js - start');
-
-    angular.component = function angularComponent(component, template, scope, controller) {
+    angular.component = function (component, template, scope, controller) {
         var module = component.split('.');
+
         if (module.length > 1) {
             component = module[1];
             module = module[0];
@@ -22,7 +22,6 @@
 
     };
 
-    console.log('!!! component.js - end');
+    console.log('!!! component.js');
 
-
-//}());
+}());

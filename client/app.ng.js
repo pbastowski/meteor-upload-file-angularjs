@@ -1,24 +1,17 @@
-//;(function () {
-//    'use strict'
+;(function () {
+    'use strict';
 
     console.log('!!! app.js');
-
-    window.Images = new FS.Collection('images', {
-        //stores: [new FS.Store.FileSystem("images", {path: "../../../../../.uploads"})]
-        stores: [new FS.Store.GridFS('images')]
-    });
-
 
     angular.module('app', ['angular-meteor'])
         .controller('app', appController)
     ;
 
-    //angular.component('test', '<button>This is a test</button>');
-
-    function appController($scope, $log, $meteor) {
+    function appController($scope, $log, $meteor, FileUpload) {
         $scope.upload = upload;
         $scope.takePhoto = takePhoto;
         $scope.url = url;
+        var Images = FileUpload.Images;
 
         $scope.images = $meteor.collection(function () { return Images.find() });
 
@@ -47,4 +40,4 @@
             });
         }
     }
-//})
+}());
