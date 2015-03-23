@@ -14,8 +14,8 @@
     angular.module('app', ['angular-meteor'])
 
         .controller('app', appController)
+        .directive('fileModel', fileModelDirective)
     ;
-        //.directive('fileModel', fileModelDirective)
 
     //angular.component('test', '<button>This is a test</button>');
 
@@ -32,7 +32,7 @@
         $log.debug('directive fileModel');
         return {
             restrict: 'A',
-            scope:    {fileModel: '=', onSelect: '&'},
+            scope:    { fileModel: '&' },
             link:     link
         }
 
@@ -40,10 +40,8 @@
             el.bind('change', function (evt) {
                 scope.$apply(function () {
                     if (!scope.$parent.IE789) {
-                        scope.fileModel = evt.target.files;
-                        if (scope.onSelect && scope.onSelect != '') {
-                            //$log.log('File(s): ', evt.target.files);
-                            scope.onSelect({'$event': evt});
+                        if (scope.fileModel && scope.fileModel != '') {
+                            scope.fileModel({'$event': evt});
                         }
                         //else {
                         //	scope.fileModel = evt.target.value;
@@ -62,7 +60,7 @@
         $scope.images = $meteor.collection(function () {
             return Images.find()
         });
-        $scope.vm = {cameraImg: ''};
+        //$scope.vm = {cameraImg: ''};
 
 
         $scope.url = function (image) {
@@ -76,11 +74,11 @@
                 if (error)
                     $log.error('camera returned an error: ', error);
 
-                $scope.vm.cameraImg = data;
-                $scope.$apply();
+                //$scope.vm.cameraImg = data;
 
                 Images.insert(data, function (err, fileObj) {
                     // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+                    $scope.$apply();
                     $log.debug('insert: ', err, fileObj);
                 });
 
@@ -102,7 +100,7 @@
                 $log.debug('insert: ', err, fileObj);
             });
 
-            $scope.$apply();
+            //$scope.$apply();
         }
     }
 //})
