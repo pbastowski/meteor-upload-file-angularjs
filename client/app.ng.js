@@ -1,23 +1,24 @@
-;(function () {
+;
+(function () {
     'use strict';
 
     console.log('!!! app.js');
 
     angular.module('app', ['angular-meteor'])
+        .directive('pbChange', pbChange)
         .controller('app', appController)
-        .directive('fileModel', fileModelDirective)
     ;
 
     function appController($scope, $log, FileUpload) {
         console.log('! app controller');
 
         $scope.upload = FileUpload.uploadImg;
-        $scope.url    = FileUpload.url;
+        $scope.url = FileUpload.url;
         $scope.images = FileUpload.images;
 
         $scope.takePhoto = takePhoto;
 
-        function takePhoto () {
+        function takePhoto() {
             MeteorCamera.getPicture(callback);
 
             function callback(error, data) {
@@ -25,46 +26,34 @@
                     return $log.error('camera returned an error: ', error);
 
                 FileUpload.uploadImg(data);
-                    //.then($scope.apply);
             }
         }
 
     }
 
     /**
-     * file-model (directive) - attribute only
+     * pb-change (directive) - attribute only
      *
-     * The ngModel directive does not support input[type=file]. fileModel does.
+     * The ng-change directive in conjunction with ng-model does not support input[type=file]. pb-change does.
      *
-     * Usage: <input type="file" file-model="file.object">
-     *
-     * The file object returned by the input control will be stored in $scope.file.object.
+     * Usage: <input type="file" pb-change="upload($event)">
      */
-    function fileModelDirective($log) {
-        console.log('directive fileModelDirective');
-
-        $log.debug('directive fileModel');
+    function pbChange() {
         return {
             restrict: 'A',
-            scope:    { fileModel: '&' },
+            scope:    {pbChange: '&'},
             link:     link
         }
 
-        function link(scope, el, attrs) {
+        function link(scope, el) {
             el.bind('change', function (evt) {
-                scope.$apply(function () {
-                    if (!scope.$parent.IE789) {
-                        if (scope.fileModel && scope.fileModel != '') {
-                            scope.fileModel({'$event': evt});
-                        }
-                        //else {
-                        //	scope.fileModel = evt.target.value;
-                        //}
-
-                        //$log.debug("fileModel change: ", scope.fileModel);
-                    }
-                });
+                if (scope.pbChange && scope.pbChange !== '') {
+                    scope.$apply(function () {
+                        scope.pbChange({'$event': evt});
+                    });
+                }
             })
         }
     }
+
 }());

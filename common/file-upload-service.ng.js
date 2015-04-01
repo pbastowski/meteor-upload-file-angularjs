@@ -1,6 +1,22 @@
 /**
  * FileUpload service
+ *
+ * Inject it where needed on the client side.
+ *
+ * Returns a factory with the following members:
+ *
+ *  images:     $meteor.collection of all the Images
+ *  url:        Returns the url of an images array element
+ *  uploadImg:  Uploads an image to the server.
+ *              Pass in the one of the following objects:
+ *              - the event object that triggered the change on input[type=file]
+ *              - the DOM element of the input[type=file]
+ *              - the file image data, such as that returned by MeteorCamera.
+ *
+ * Currently I do nothing with the Images object on the server side,
+ * but it is none the less needed, otherwise images will not be persisted.
  */
+
 ;(function(){
 
     console.log('!!! file-upload-service');
@@ -36,9 +52,12 @@
                     data = el;
 
                 var d = $q.defer();
+
                 Images.insert(data, function (err, fileObj) {
-                    $log.debug('insert: ', fileObj);
-                    d.resolve();
+                    if (err)
+                        d.reject(err);
+                    else
+                        d.resolve();
                 });
 
                 return d.promise;
