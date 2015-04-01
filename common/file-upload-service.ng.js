@@ -19,7 +19,7 @@
 
 ;(function(){
 
-    console.log('!!! file-upload-service');
+    console.log('! file-upload-service.ng.js');
 
     var Images = new FS.Collection('images', {
         //stores: [new FS.Store.FileSystem("images", {path: "../../../../../.uploads"})]

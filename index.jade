@@ -10,16 +10,16 @@ body
 
         h3 Input[type=file] upload with Angular and Meteor
 
-        p Take photo with camera
-            button.btn.btn-primary(ng-click="takePhoto()") Take a Photo
+        p
+            button.btn.btn-primary(ng-click="takePhoto()") Take a Photo with the Camera
 
-        p File Upload
+        p
             span.btn.btn-success.file-container
                 input(
                     type="file",
                     pb-change="upload($event)",
                     )
-                | Select an image to upload
+                | Select an image to Upload
 
         hr
 

@@ -1,6 +1,8 @@
 ;(function () {
     'use strict';
 
+    console.log('! angular.component.ng.js');
+
     angular.component = function (component, template, scope, controller) {
         var module = component.split('.');
 
@@ -21,7 +23,5 @@
         });
 
     };
-
-    console.log('!!! component.js');
 
 }());
