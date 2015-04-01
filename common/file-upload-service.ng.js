@@ -30,6 +30,8 @@
             function uploadImg(el) {
                 if (el instanceof HTMLElement)
                     var data = el.files[0];
+                else if (el instanceof jQuery.Event)
+                    data = el.target.files[0];
                 else
                     data = el;
 

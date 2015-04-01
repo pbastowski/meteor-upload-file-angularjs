@@ -18,7 +18,7 @@ body
         .btn.btn-success.file-container
             input(
                 type="file",
-                onchange="angular.element(this).scope().upload(this)"
+                file-model="upload($event)",
                 )
             | Select an image to upload
 
