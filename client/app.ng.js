@@ -9,6 +9,21 @@
         .controller('app', appController)
     ;
 
+    // The angular.component call below has nothing to do with the file upload
+    // I am just testing here a function called angular.component, which creates
+    // directives in a minimalistic way.
+    angular.component('uploadedImages', '<b>Uploaded Images</b>', {}, uploadedImages);
+
+    function uploadedImages($scope, $element) {
+        $element.on('click', toggle);
+        $element.css('cursor', 'pointer');
+
+        function toggle() {
+            console.log(' background: ', $element.css('background-color'));
+            $element.css('background-color', $element.css('background-color') == 'rgb(255, 255, 0)' ? '' : 'yellow');
+        }
+    }
+
     function appController($scope, $log, FileUpload) {
         console.log('! app controller');
 
