@@ -1,3 +1,5 @@
 .uploads/
 .idea/
 .meteor/local
+.DS_Store
+.meteor/.DS_Store
